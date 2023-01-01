@@ -1,0 +1,7 @@
+googleapis:
+  - artifactregistry
+  - cloudbuild
+  - run
+project: ''
+region: ''
+service: ''

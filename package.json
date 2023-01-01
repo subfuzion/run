@@ -1,6 +1,6 @@
 {
   "name": "@subfuzion/run",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lightweight CLI for serverless projects on Cloud Run. Not an official Google project.",
   "type": "module",
   "bin": {
@@ -20,7 +20,6 @@
   "dependencies": {
     "@google-cloud/resource-manager": "^4.1.1",
     "@google-cloud/service-usage": "^2.0.0",
-    "@subfuzion/run": "github:subfuzion/run",
     "commander": "^9.4.1",
     "inquirer": "^9.1.4",
     "js-yaml": "^4.1.0",
