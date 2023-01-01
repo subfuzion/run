@@ -2,7 +2,6 @@
   "name": "@subfuzion/run",
   "version": "0.1.0",
   "description": "Lightweight CLI for serverless projects on Cloud Run. Not an official Google project.",
-  "private": true,
   "type": "module",
   "bin": {
     "run": "./dist/bin/run.js"
