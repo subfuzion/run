@@ -1,0 +1,12 @@
+{
+  "name": "{{app}}",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Basic Express API app",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "license": "MIT"
+}

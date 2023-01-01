@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "nodenext",
+    "module": "ES2020",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "lib": ["ES2022"],
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "typeRoots": ["./types", "./node_modules/@types"]
+  },
+  "include": ["./types", "./bin/**/*", "./lib/**/*"],
+  "exclude": ["./lib/templates"],
+  "ts-node": {
+    "swc": true // https://typestrong.org/ts-node/docs/swc/
+  }
+}

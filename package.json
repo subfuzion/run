@@ -1,0 +1,38 @@
+{
+  "name": "@subfuzion/run",
+  "version": "0.1.0",
+  "description": "Lightweight CLI for serverless projects on Cloud Run. Not an official Google project.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "run": "./dist/bin/run.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "cp -r ./lib/templates ./dist/lib && chmod +x ./dist/bin/run.js",
+    "clean": "rm -rf dist",
+    "dev": "ts-node-esm bin/run.ts",
+    "watch": "tsc --watch",
+    "start": "node ./dist/bin/run.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tony Pujals <tonypujals@google.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@google-cloud/resource-manager": "^4.1.1",
+    "@google-cloud/service-usage": "^2.0.0",
+    "@subfuzion/run": "github:subfuzion/run",
+    "commander": "^9.4.1",
+    "inquirer": "^9.1.4",
+    "js-yaml": "^4.1.0",
+    "nunjucks": "^3.2.3",
+    "pkg-up": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/js-yaml": "^4.0.5",
+    "@types/nunjucks": "^3.2.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  }
+}
