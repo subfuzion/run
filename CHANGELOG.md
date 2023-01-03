@@ -1,3 +1,7 @@
+## 0.1.3
+
+Fix template recursive copy.
+
 ## 0.1.2
 
 Adds a basic Express API (`express-api`) template to the project generator.
