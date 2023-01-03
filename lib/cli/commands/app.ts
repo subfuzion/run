@@ -32,12 +32,12 @@ export async function create(context: Context, options: any) {
   context.io.print();
 
   if (template.needsInstall) {
-    context.io.print("🖥️ For local development, enter:");
+  context.io.print("> For local development, enter:");
     context.io.print("  npm install");
     context.io.print("  npm start");
   }
 
-  context.io.print("🚀 To launch on Cloud Run, enter:");
+  context.io.print("> To launch on Cloud Run, enter:");
   context.io.print("  run deploy");
 }
 
