@@ -37,7 +37,15 @@ tests result code.
 
 3. Installation
 
-`npm install` must be run to ensure that
+`npm install` must be run to confirm that:
 
 - The package installs without audit errors.
 - `package.json` and `package-lock.json` are in sync (or Cloud Build will fail).
+
+Ensure that `node_modules` is deleted after confirming.
+
+This one-liner should do the trick (but still confirm no audit warnings):
+
+```text
+rm package-lock.json && npm install && rm -rf node_modules
+```

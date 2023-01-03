@@ -1,3 +1,9 @@
+# CHANGELOG
+
+## 0.1.6
+
+Fix update template.
+
 ## 0.1.5
 
 Update template, add docs/contributing-new-templates.md

@@ -1,6 +1,6 @@
 {
   "name": "@subfuzion/run",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Lightweight CLI for serverless projects on Cloud Run. Not an official Google project.",
   "type": "module",
   "bin": {
