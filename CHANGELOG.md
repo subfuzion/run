@@ -1,3 +1,7 @@
+## 0.1.5
+
+Update template, add docs/contributing-new-templates.md
+
 ## 0.1.4
 
 Improve express-api template.
