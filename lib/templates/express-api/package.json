@@ -1,12 +1,28 @@
 {
-  "name": "{{app}}",
+  "name": "cloudrun-express-api",
+  "version": "1.0.0",
+  "description": "Starter Express api",
   "private": true,
-  "version": "0.0.0",
-  "description": "Basic Express API app",
   "type": "module",
+  "license": "Apache-2.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "lint": "eslint src/ --fix",
+    "start": "node src/server.js",
+    "test": "echo \"No tests\" && exit 0"
   },
-  "license": "MIT"
+  "dependencies": {
+    "@google-cloud/logging": "^10.1.0",
+    "express": "~4.16.1"
+  },
+  "save": {
+    "body-parser": "^1.20.0",
+    "cookie-parser": "~1.4.4",
+    "helmet": "^5.1.0",
+    "http-errors": "~1.6.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-jsdoc": "^39.3.3"
+  }
 }
