@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.7
+
+Add an example (templates/example-express-api)
+
 ## 0.1.6
 
 Fix update template.
