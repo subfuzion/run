@@ -35,17 +35,22 @@ the cloud buildpack.
 The `test` script should exit 0 if no tests, otherwise exit with an appropriate
 tests result code.
 
-3. Installation
+3. Ensure package includes appropriate files
+
+- .gitignore
+- .npmignore
+- lint configuration, etc., and appropriate run scripts.
+
+4. Installation
 
 `npm install` must be run to confirm that:
 
 - The package installs without audit errors.
 - `package.json` and `package-lock.json` are in sync (or Cloud Build will fail).
 
-Ensure that `node_modules` is deleted after confirming.
+4. Test the package and clean up
 
-This one-liner should do the trick (but still confirm no audit warnings):
+Ensure the package has `test` and `clean` scripts.
 
-```text
-rm package-lock.json && npm install && rm -rf node_modules
-```
+Make sure that any artifacts that are generated during testing are actually
+cleaned up with `npm run clean`.
