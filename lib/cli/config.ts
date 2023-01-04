@@ -1,7 +1,7 @@
-import yaml from 'js-yaml';
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {homedir} from 'node:os';
 import {dirname, join} from 'node:path';
+import yaml from 'js-yaml';
 
 import {IO} from '../io/io.js';
 

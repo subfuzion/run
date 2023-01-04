@@ -1,4 +1,4 @@
-import {createRequire} from "module";
+import {createRequire} from "node:module";
 import {dirname} from "node:path";
 import {fileURLToPath} from "node:url";
 import {pkgUpSync} from "pkg-up";

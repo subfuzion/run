@@ -1,5 +1,5 @@
 import {readdir} from "node:fs/promises";
-import {join} from "path";
+import {join} from "node:path";
 
 import {Generator} from "../../templates/generator.js";
 import {Context} from "../context.js";
