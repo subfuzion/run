@@ -1,5 +1,8 @@
 # run
 
+[![GitHub version](https://badge.fury.io/gh/subfuzion%2Frun.svg)](https://badge.fury.io/gh/subfuzion%2Frun)
+[![npm version](https://badge.fury.io/js/@subfuzion%2Frun.svg)](https://badge.fury.io/js/@subfuzion%2Frun)
+
 A lightweight utility for Node.js developers that simplifies creating,
 deploying, and monitoring serverless [Cloud Run] apps on [Google Cloud].
 
