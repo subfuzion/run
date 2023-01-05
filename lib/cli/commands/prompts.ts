@@ -1,6 +1,6 @@
+import {basename} from "node:path";
 import Separator = inquirer.Separator;
 import inquirer from "inquirer";
-import {basename} from "node:path";
 
 import {Generator, Template} from "../../templates/generator.js";
 
