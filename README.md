@@ -120,6 +120,52 @@ Then you can add package.json `run` scripts.
   },
 ```
 
+## run configuration
+
+`run` uses two configuration files:
+
+* General user configuration stored in `$HOME/.config/run/run.yaml`
+* Specific app configuration stored in `./run.yaml`
+
+### General user configuration
+
+General user configuration consists of a single field:
+
+*$HOME/.config/run/run.yaml*
+```yaml
+# Billing ID (https://console.cloud.google.com/billing)
+billingId = '';
+```
+
+### Specific app configuration
+
+Specific app configuration consists of the following fields:
+
+*./run.yaml*
+```yaml
+# Google APIs to enable (defaults include APIs to build/deploy Cloud Run app)
+googleapis = [
+'artifactregistry',
+'cloudbuild',
+'run',
+];
+
+# The Project ID (not necessarily the same as the project name)
+project = '';
+
+# Cloud Run region (https://cloud.google.com/run/docs/locations)
+region = '';
+
+# The hosted service name to use with Cloud Run
+service = '';
+```
+
+> Multiple app projects might share the same cloud project ID and region,
+> but the `service` name must be unique within the cloud project.
+
+> The `project` ID must be globally unique across all of Google Cloud. Read more
+> [here](https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin).
+
 ## Contributing changes.
 
 Entirely new samples and bug fixes are welcome, either as pull requests or as

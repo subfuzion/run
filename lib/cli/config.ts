@@ -85,6 +85,7 @@ abstract class ConfigFile {
 
 
 export class GlobalConfigSettings extends ConfigFile {
+  // Billing ID (https://console.cloud.google.com/billing)
   billingId = '';
 
   constructor(pathname: string, io: IO) {
@@ -94,13 +95,20 @@ export class GlobalConfigSettings extends ConfigFile {
 
 
 export class AppConfigSettings extends ConfigFile{
+  // Google APIs to enable (defaults include APIs to build/deploy Cloud Run app)
   googleapis = [
     'artifactregistry',
     'cloudbuild',
     'run',
   ];
+
+  // The Project ID (not necessarily the same as the project name)
   project = '';
+
+  // Cloud Run region (https://cloud.google.com/run/docs/locations)
   region = '';
+
+  // The hosted service name to use with Cloud Run
   service = '';
 
   constructor(pathname: string, io: IO) {
