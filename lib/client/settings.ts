@@ -2,6 +2,9 @@ import {Context} from "../cli/context.js";
 import {Printer} from "../io/printer.js";
 
 
+/**
+ *
+ */
 export class Settings {
   project: string;
   out: Printer;

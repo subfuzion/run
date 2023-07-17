@@ -70,6 +70,9 @@ abstract class AbstractPrinter implements Printer {
 }
 
 
+/**
+ *
+ */
 export class TextPrinter extends AbstractPrinter implements Printer {
   out: Writable = stdout;
 
@@ -119,6 +122,9 @@ export class TextPrinter extends AbstractPrinter implements Printer {
 }
 
 
+/**
+ *
+ */
 export class TerminalPrinter extends AbstractPrinter implements Printer {
   out: Writable = stdout;
 

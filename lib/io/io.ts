@@ -20,9 +20,9 @@ export class TextIO extends TextPrinter {
   private readonly logger: Logger;
 
   constructor(
-      out?: Writable,
-      errOrLogger?: Writable | Logger,
-      logLevel = LogLevel.None) {
+    out?: Writable,
+    errOrLogger?: Writable | Logger,
+    logLevel = LogLevel.None) {
     super(out);
 
     if (errOrLogger instanceof Writable) {
@@ -32,9 +32,11 @@ export class TextIO extends TextPrinter {
     }
   }
 
-  get log() { return this.logger; };
+  get log() {
+    return this.logger;
+  }
 
-  override fail(...args: any[]): void {
+  override fail(...args: never[]): void {
     this.log.error(...args);
     super.fail(...args);
   }
@@ -49,9 +51,9 @@ export class TerminalIO extends TerminalPrinter {
   private readonly logger: Logger;
 
   constructor(
-      out?: Writable,
-      errOrLogger?: Writable | Logger,
-      logLevel = LogLevel.None) {
+    out?: Writable,
+    errOrLogger?: Writable | Logger,
+    logLevel = LogLevel.None) {
     super(out);
 
     if (errOrLogger instanceof Writable) {
@@ -61,17 +63,22 @@ export class TerminalIO extends TerminalPrinter {
     }
   }
 
-  get log() { return this.logger; };
+  get log() {
+    return this.logger;
+  }
 
-  override fail(...args: any[]): void {
+  override fail(...args: never[]): void {
     this.log.error(...args);
     super.fail(...args);
   }
 }
 
 
+/**
+ *
+ */
 export function getDefaultIO(logLevel = LogLevel.None): IO {
-  return process.stdin.isTTY
-         ? new TerminalIO(stdout, stderr, logLevel)
-         : new TextIO(stdout, stderr, logLevel);
+  return process.stdin.isTTY ?
+    new TerminalIO(stdout, stderr, logLevel) :
+    new TextIO(stdout, stderr, logLevel);
 }

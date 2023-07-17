@@ -1,9 +1,9 @@
-import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
-import {homedir} from 'node:os';
-import {dirname, join} from 'node:path';
-import yaml from 'js-yaml';
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from "node:fs";
+import {homedir} from "node:os";
+import {dirname, join} from "node:path";
+import yaml from "js-yaml";
 
-import {IO} from '../io/io.js';
+import {IO} from "../io/io.js";
 
 
 abstract class ConfigFile {
@@ -25,14 +25,14 @@ abstract class ConfigFile {
    */
   load() {
     let contents: string;
-    let io = this.io;
+    const io = this.io;
     let settings;
 
     try {
       io.log.info(`Loading configuration: ${this.pathname}`);
       contents = readFileSync(this.pathname).toString();
     } catch (e) {
-      io.log.info(`No configuration found, saving default configuration (${this.pathname})`);
+      io.log.info(`No configuration found, creating: (${this.pathname})`);
       this.save();
       contents = readFileSync(this.pathname).toString();
     }
@@ -56,22 +56,22 @@ abstract class ConfigFile {
    * Save configuration to file.
    */
   save() {
-    let io = this.io;
+    const io = this.io;
     try {
-      const entries = Object.entries(this).filter(e => {
+      const entries = Object.entries(this).filter((e) => {
         const [key] = e;
-        return !['_pathname', 'io'].includes(key);
+        return !["_pathname", "io"].includes(key);
       });
       const settings: any = {};
-      entries.forEach(e => {
+      entries.forEach((e) => {
         const [key, value] = e;
         settings[key] = value;
       });
       const doc = yaml.dump(settings, {
-        'styles': {
-          '!!null': 'empty',
+        "styles": {
+          "!!null": "empty",
         },
-        'sortKeys': true,
+        "sortKeys": true,
       });
       const dir = dirname(this.pathname);
       if (!existsSync(dir)) mkdirSync(dir, {recursive: true});
@@ -84,9 +84,12 @@ abstract class ConfigFile {
 }
 
 
+/**
+ *
+ */
 export class GlobalConfigSettings extends ConfigFile {
   // Billing ID (https://console.cloud.google.com/billing)
-  billingId = '';
+  billingId = "";
 
   constructor(pathname: string, io: IO) {
     super(pathname, io);
@@ -94,22 +97,25 @@ export class GlobalConfigSettings extends ConfigFile {
 }
 
 
-export class AppConfigSettings extends ConfigFile{
+/**
+ *
+ */
+export class AppConfigSettings extends ConfigFile {
   // Google APIs to enable (defaults include APIs to build/deploy Cloud Run app)
   googleapis = [
-    'artifactregistry',
-    'cloudbuild',
-    'run',
+    "artifactregistry",
+    "cloudbuild",
+    "run",
   ];
 
   // The Project ID (not necessarily the same as the project name)
-  project = '';
+  project = "";
 
   // Cloud Run region (https://cloud.google.com/run/docs/locations)
-  region = '';
+  region = "";
 
   // The hosted service name to use with Cloud Run
-  service = '';
+  service = "";
 
   constructor(pathname: string, io: IO) {
     super(pathname, io);
@@ -117,6 +123,9 @@ export class AppConfigSettings extends ConfigFile{
 }
 
 
+/**
+ *
+ */
 export class Config {
   app: AppConfigSettings;
   global: GlobalConfigSettings;
@@ -147,8 +156,11 @@ export class Config {
 }
 
 
+/**
+ *
+ */
 export function loadConfig(appConfigPathname: string, io: IO) {
-  const globalConfigPathname = join(homedir(), '.config', 'run', 'run.yaml');
+  const globalConfigPathname = join(homedir(), ".config", "run", "run.yaml");
   const config = new Config(appConfigPathname, globalConfigPathname, io);
   config.load();
   return config;

@@ -17,6 +17,9 @@ export function getPackage(urlOrPath: string): any {
 }
 
 
+/**
+ *
+ */
 export function getPackageVersion(urlOrPath: string): string {
   return getPackage(urlOrPath).version;
 }

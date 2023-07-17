@@ -1,12 +1,16 @@
 import {ServiceUsageClient} from "@google-cloud/service-usage";
 import {google} from "@google-cloud/service-usage/build/protos/protos.js";
 
-import IBatchEnableServicesResponse = google.api.serviceusage.v1.IBatchEnableServicesResponse;
-import IService = google.api.serviceusage.v1.IService;
-
 import {CloudClient} from "./cloud.js";
 import {Settings} from "./settings.js";
 
+import IBatchEnableServicesResponse
+    = google.api.serviceusage.v1.IBatchEnableServicesResponse;
+import IService = google.api.serviceusage.v1.IService;
+
+/**
+ *
+ */
 export class Client extends CloudClient {
   serviceUsageClient;
 
@@ -34,7 +38,7 @@ export class Client extends CloudClient {
     let serviceIds = services;
 
     const suffix = ".googleapis.com";
-    serviceIds = serviceIds.map(id => id.endsWith(suffix) ? id : id + suffix);
+    serviceIds = serviceIds.map((id) => id.endsWith(suffix) ? id : id + suffix);
 
     const request = {
       parent: parent,
@@ -49,9 +53,10 @@ export class Client extends CloudClient {
         throw new Error(`operation timed out (${operation.name})`);
       }, timeout);
 
-      const result = await new Promise(async (resolve) => {
+      const result = Promise.resolve((resolve: any) => {
         async function check(operation: any, resolve: any) {
-          const op = await client.checkBatchEnableServicesProgress(operation.name);
+          const op =
+              await client.checkBatchEnableServicesProgress(operation.name);
           printer.print("checking operation status...");
           if (!op.done) {
             // console.log(op.metadata);
@@ -64,16 +69,17 @@ export class Client extends CloudClient {
           }
         }
 
-        await check(operation, resolve);
+        // TODO verify
+        check(operation, resolve);
       });
 
       // google.api.serviceusage.v1.IService[]
       const services = (result as IBatchEnableServicesResponse).services;
       return services?.sort()
-                     .map((s: IService) => printer.print("- " +
-                                                     s.name!.split("/")!.at(-1)!.replace(
-                                                         suffix,
-                                                         "")));
+        .map((s: IService) => printer.print("- " +
+              s.name!.split("/")!.at(-1)!.replace(
+                suffix,
+                "")));
 
       // async function check(operation) {
       //   return await new Promise(async resolve => {
@@ -95,7 +101,6 @@ export class Client extends CloudClient {
       throw new Error(`${e.details?.split("\n")[0] || e.message}`);
     }
   }
-
 }
 
 

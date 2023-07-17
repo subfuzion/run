@@ -2,18 +2,24 @@ import {exec, exited, readable, readableToString} from "../../client/gcloud.js";
 import {Context} from "../context.js";
 
 
+/**
+ *
+ */
 export async function login(context: Context): Promise<void> {
   // TODO: remove userLogin when gcloud command wrappers are converted to
   // client API calls.
-  context.io.print(`Requesting user credentials...`);
+  context.io.print("Requesting user credentials...");
   await userLogin(context);
 
   // Request application default credentials to use client library.
-  context.io.print(`Authorizing CLI...`);
+  context.io.print("Authorizing CLI...");
   await appLogin(context);
 }
 
 
+/**
+ *
+ */
 export async function logout(context: Context): Promise<void> {
   const proc = exec("gcloud", ["auth", "revoke"]);
   const {stdout, stderr} = readable(proc);
@@ -36,7 +42,7 @@ export async function logout(context: Context): Promise<void> {
   // Shouldn't be overlap, but just in case:
   const matches = Array.from(new Set([
     ...outMatches || [],
-    ...errMatches || []
+    ...errMatches || [],
   ]));
 
   if (matches && matches.length) {
@@ -78,7 +84,7 @@ async function userLogin(context: Context): Promise<void> {
 
 async function appLogin(context: Context): Promise<void> {
   const proc = exec("gcloud", [
-    "auth", "application-default", "login", "--disable-quota-project"
+    "auth", "application-default", "login", "--disable-quota-project",
   ]);
   const {stderr} = readable(proc);
   const output = await readableToString(stderr);

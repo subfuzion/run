@@ -1,9 +1,12 @@
-import { EventEmitter } from 'node:events';
+import {EventEmitter} from "node:events";
 
 import {Printer} from "../io/printer.js";
 import {Settings} from "./settings.js";
 
 
+/**
+ *
+ */
 export abstract class CloudClient extends EventEmitter {
   readonly settings: Settings;
   readonly projectParent;

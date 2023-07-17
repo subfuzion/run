@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 import {Context} from "../context.js";
 import * as project from "./project.js";
 import {
-  billingPrompt, newBillingPrompt, enterProjectPrompt, projectPrompt
+  billingPrompt, newBillingPrompt, enterProjectPrompt, projectPrompt,
 } from "./prompts.js";
 
 
@@ -20,7 +20,7 @@ export async function check(context: Context, requireBilling = true) {
   if (!context.config.global.billingId && requireBilling) {
     await configureBilling(context);
     if (!context.config.global.billingId) {
-      context.io.fail(`Billing ID is required.`);
+      context.io.fail("Billing ID is required.");
     }
   }
 
@@ -44,7 +44,7 @@ export async function check(context: Context, requireBilling = true) {
 export async function configure(context: Context, requireBilling = false) {
   await configureBilling(context);
   if (requireBilling && !context.config.global.billingId) {
-    context.io.fail(`Billing ID is required.`);
+    context.io.fail("Billing ID is required.");
   }
   await configureService(context);
   await configureProject(context);
@@ -52,46 +52,52 @@ export async function configure(context: Context, requireBilling = false) {
 }
 
 
+/**
+ *
+ */
 export async function configureBilling(context: Context) {
   let billingId: BillingId = context.config.global.billingId;
 
   if (billingId) {
     const choice = await billingPrompt(billingId);
     switch (choice) {
-      case "continue":
-        return;
-      case "enter":
-        break;
-      case "remove":
-        context.config.global.billingId = "";
-        context.config.global.save();
-        return;
-      default:
-        context.io.fail(`Invalid choice: ${choice}`);
+    case "continue":
+      return;
+    case "enter":
+      break;
+    case "remove":
+      context.config.global.billingId = "";
+      context.config.global.save();
+      return;
+    default:
+      context.io.fail(`Invalid choice: ${choice}`);
     }
   }
 
   billingId = await newBillingPrompt();
-  if (!billingId) context.io.fail('billing ID is required');
+  if (!billingId) context.io.fail("billing ID is required");
   context.config.global.billingId = billingId;
   context.config.global.save();
 }
 
 
+/**
+ *
+ */
 export async function configureProject(context: Context) {
   const projectId: ProjectId = context.config.app.project;
   const choice = await projectPrompt(projectId);
   switch (choice) {
-    case "continue":
-      return;
-    case "create":
-      return await createProject(context);
-    case "enter":
-      return await enterProject(context);
-    case "choose":
-      return await chooseProject(context);
-    default:
-      context.io.fail(`Invalid choice: ${choice}`);
+  case "continue":
+    return;
+  case "create":
+    return await createProject(context);
+  case "enter":
+    return await enterProject(context);
+  case "choose":
+    return await chooseProject(context);
+  default:
+    context.io.fail(`Invalid choice: ${choice}`);
   }
 }
 
@@ -103,7 +109,7 @@ export async function configureProject(context: Context) {
  */
 async function enterProject(context: Context) {
   const projectId = await enterProjectPrompt();
-  if (!projectId) context.io.fail(`Project ID is required.`);
+  if (!projectId) context.io.fail("Project ID is required.");
   context.config.app.project = projectId;
   context.config.app.save();
   await project.set(context);
@@ -114,6 +120,7 @@ async function enterProject(context: Context) {
  * Choose an existing project ID from a list of projects for the account.
  * @param context
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function chooseProject(context: Context) {
   throw new Error("TODO: implement chooseProject.");
   // context.config.app.project = projectId;
@@ -126,7 +133,7 @@ async function createProject(context: Context) {
     name: "projectId",
     message: "Enter a new globally unique project ID:",
   });
-  if (!projectId) context.io.fail(`Project ID is required.`);
+  if (!projectId) context.io.fail("Project ID is required.");
   context.config.app.project = projectId;
   context.config.app.save();
   await configureRegion(context);
@@ -134,8 +141,11 @@ async function createProject(context: Context) {
 }
 
 
+/**
+ *
+ */
 export async function configureRegion(context: Context) {
-  let region: RegionId = context.config.app.region;
+  const region: RegionId = context.config.app.region;
 
   const alreadyConfigured = [
     `Continue using this region (${region})`,
@@ -164,18 +174,18 @@ export async function configureRegion(context: Context) {
     choices: choices,
     filter(val) {
       return val.split(" ")[0].toLowerCase();
-    }
+    },
   });
 
   switch (choice) {
-    case "continue":
-      return;
-    case "enter":
-      return await enterRegion(context);
-    case "choose":
-      return await chooseRegion(context);
-    default:
-      context.io.fail(`Invalid choice: ${choice}`);
+  case "continue":
+    return;
+  case "enter":
+    return await enterRegion(context);
+  case "choose":
+    return await chooseRegion(context);
+  default:
+    context.io.fail(`Invalid choice: ${choice}`);
   }
 }
 
@@ -185,19 +195,23 @@ async function enterRegion(context: Context) {
     name: "region",
     message: "Enter region:",
   });
-  if (!region) context.io.fail(`Region is required.`);
+  if (!region) context.io.fail("Region is required.");
   context.config.app.region = region;
   context.config.app.save();
 }
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function chooseRegion(context: Context) {
   throw new Error("TODO: implement chooseRegion");
 }
 
 
+/**
+ *
+ */
 export async function configureService(context: Context) {
-  let service: RegionId = context.config.app.service;
+  const service: RegionId = context.config.app.service;
 
   if (!service) return await enterService(context);
 
@@ -227,16 +241,16 @@ export async function configureService(context: Context) {
     choices: choices,
     filter(val) {
       return val.split(" ")[0].toLowerCase();
-    }
+    },
   });
 
   switch (choice) {
-    case "continue":
-      return;
-    case "update":
-      return await enterService(context);
-    default:
-      context.io.fail(`invalid choice: ${choice}`);
+  case "continue":
+    return;
+  case "update":
+    return await enterService(context);
+  default:
+    context.io.fail(`invalid choice: ${choice}`);
   }
 }
 
@@ -244,9 +258,9 @@ export async function configureService(context: Context) {
 async function enterService(context: Context) {
   const {service} = await inquirer.prompt({
     name: "service",
-    message: `Enter a name to identify the deployed service:`,
+    message: "Enter a name to identify the deployed service:",
   });
-  if (!service) context.io.fail(`Service name is required.`);
+  if (!service) context.io.fail("Service name is required.");
   context.config.app.service = service;
   context.config.app.save();
 }

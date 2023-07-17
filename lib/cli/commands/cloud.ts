@@ -1,9 +1,12 @@
-import {exec, exited, readable, readableToString} from '../../client/gcloud.js';
+import {exec, exited, readable, readableToString} from "../../client/gcloud.js";
 
-import {check} from './configure.js';
-import {Context} from '../context.js';
+import {check} from "./configure.js";
+import {Context} from "../context.js";
 
 
+/**
+ *
+ */
 export async function deploy(context: Context) {
   await check(context);
   const project = context.config.app.project;
@@ -11,19 +14,21 @@ export async function deploy(context: Context) {
   const service = context.config.app.service;
   const source = ".";
 
-  const proc = exec('gcloud', [
-    '--project', project,
-    'run',
-    'deploy',
+  const proc = exec("gcloud", [
+    "--project", project,
+    "run",
+    "deploy",
     service,
     `--source=${source}`,
-    '--allow-unauthenticated',
+    "--allow-unauthenticated",
     `--region=${region}`,
-    '--quiet',
+    "--quiet",
   ]);
-  const {stdout, stderr} = readable(proc);
 
-  const out = await readableToString(stdout);
+  // const {stdout, stderr} = readable(proc);
+  const {stderr} = readable(proc);
+
+  // const out = await readableToString(stdout);
   const err = await readableToString(stderr);
 
   // if (out) {
@@ -41,12 +46,18 @@ export async function deploy(context: Context) {
 }
 
 
+/**
+ *
+ */
 export async function undeploy(context: Context) {
   context.io.print(context.command?.name());
   context.io.log.info(JSON.stringify({...context, command: undefined}));
 }
 
 
+/**
+ *
+ */
 export async function logs(context: Context) {
   const region = context.config.app.region;
   const service = context.config.app.service;
@@ -57,6 +68,7 @@ export async function logs(context: Context) {
     context.io.print("Open the following link in your browser:");
     context.io.print(url);
   } else {
-    context.io.fail("Current project is not configured yet (try `run configure`).");
+    context.io.fail(
+      "Current project is not configured yet (try `run configure`).");
   }
 }

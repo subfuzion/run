@@ -1,15 +1,18 @@
-import {homedir} from 'node:os';
-import * as path from 'node:path';
-import {cwd} from 'node:process';
+import {homedir} from "node:os";
+import * as path from "node:path";
+import {cwd} from "node:process";
 
-import {Command} from './command.js';
-import {Config} from './config.js';
-import {IO} from '../io/io.js';
+import {Command} from "./command.js";
+import {Config} from "./config.js";
+import {IO} from "../io/io.js";
 
-import {getDefaultIO, LogLevel} from '../io/io.js';
-import {loadConfig} from './config.js';
+import {getDefaultIO, LogLevel} from "../io/io.js";
+import {loadConfig} from "./config.js";
 
 
+/**
+ *
+ */
 export class Context {
   command?: Command;
   config!: Config;

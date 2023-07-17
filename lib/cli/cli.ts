@@ -11,6 +11,9 @@ import {Context, getContext} from "./context.js";
 const version = getPackageVersion(import.meta.url);
 
 
+/**
+ *
+ */
 export function createCLI(defaults?: Context) {
   defaults ||= new Context();
   defaults.version ||= version;
@@ -20,19 +23,20 @@ export function createCLI(defaults?: Context) {
   const contextFn = (): Context => getContext(cli, defaults);
 
   const cli = new Command("run", contextFn)
-      .description("Easy create and deploy for Cloud Run apps.")
-      .option("-a, --all", "Print all commands and options (use with --help or help).")
-      .option("-c, --config <name>", "Set pathname for configuration file.")
-      .option("-v, --verbose", "Print command execution logs.")
-      .helpOption("-h, --help", "Display help.")
-      .addHelpCommand("help [command]", "Display help for command.")
+    .description("Easy create and deploy for Cloud Run apps.")
+    .option("-a, --all",
+      "Print all commands and options (use with --help or help).")
+    .option("-c, --config <name>", "Set pathname for configuration file.")
+    .option("-v, --verbose", "Print command execution logs.")
+    .helpOption("-h, --help", "Display help.")
+    .addHelpCommand("help [command]", "Display help for command.")
   ;
 
   const addCommand = (
-      parent: Command,
-      name: string,
-      commandFn?: CommandFn,
-      opts?: {}): Command => {
+    parent: Command,
+    name: string,
+    commandFn?: CommandFn,
+    opts?: Record<any, any>): Command => {
     const cmd = new Command(name, contextFn, commandFn);
     cmd.copyInheritedSettings(parent);
     parent.addCommand(cmd, opts);
@@ -40,41 +44,42 @@ export function createCLI(defaults?: Context) {
   };
 
   addCommand(cli, "login", auth.login)
-      .description("Use login/logout to authorize or revoke access.")
+    .description("Use login/logout to authorize or revoke access.")
   ;
 
   addCommand(cli, "logout", auth.logout, {hidden: true})
-      .description("Revoke access.")
+    .description("Revoke access.")
   ;
 
   addCommand(cli, "create", app.create)
-      .description("Create a new app.")
-      .aliases(["new", "init"])
-      .option("--enable-integrations", "Add app integration features (currently demo only).")
+    .description("Create a new app.")
+    .aliases(["new", "init"])
+    .option("--enable-integrations",
+      "Add app integration features (currently demo only).")
   ;
 
   addCommand(cli, "deploy", cloud.deploy)
-      .description("Use deploy/undeploy to serve or stop serving the app.")
+    .description("Use deploy/undeploy to serve or stop serving the app.")
   ;
 
   addCommand(cli, "undeploy", cloud.undeploy, {hidden: true})
-      .description("Stop serving the app and delete resources.")
+    .description("Stop serving the app and delete resources.")
   ;
 
   addCommand(cli, "logs", cloud.logs)
-      .description("Print app logs.")
+    .description("Print app logs.")
   ;
 
   addCommand(cli, "check", configure.check, {hidden: true})
-      .description("Check configuration settings.")
+    .description("Check configuration settings.")
   ;
 
   addCommand(cli, "configure", configure.configure, {hidden: true})
-      .description("Configure settings.")
+    .description("Configure settings.")
   ;
 
   addCommand(cli, "version", runtime.version, {hidden: true})
-      .description("Print current version.")
+    .description("Print current version.")
   ;
 
   return cli;

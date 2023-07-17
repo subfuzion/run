@@ -1,8 +1,11 @@
-import {ProjectsClient} from '@google-cloud/resource-manager';
+import {ProjectsClient} from "@google-cloud/resource-manager";
 
 import {CloudClient} from "./cloud.js";
 import {Settings} from "./settings.js";
 
+/**
+ *
+ */
 export class Client extends CloudClient {
   projectsClient;
 
@@ -12,8 +15,8 @@ export class Client extends CloudClient {
   }
 
   async initialize(): Promise<void> {
-     const result = await this.projectsClient.initialize();
-     // console.log(result);
+    // const result = await this.projectsClient.initialize();
+    // console.log(result);
+    await this.projectsClient.initialize();
   }
-
 }

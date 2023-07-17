@@ -3,9 +3,16 @@ import {join} from "node:path";
 
 import {Generator} from "../../templates/generator.js";
 import {Context} from "../context.js";
-import {appNamePrompt, featurePrompt, projectTemplatePrompt} from "./prompts.js";
+import {
+  appNamePrompt,
+  featurePrompt,
+  projectTemplatePrompt,
+} from "./prompts.js";
 
 
+/**
+ *
+ */
 export async function create(context: Context, options: any) {
   const dest = context.cwd;
 
@@ -32,7 +39,7 @@ export async function create(context: Context, options: any) {
   context.io.print();
 
   if (template.needsInstall) {
-  context.io.print("> For local development, enter:");
+    context.io.print("> For local development, enter:");
     context.io.print("  npm install");
     context.io.print("  npm start");
   }
@@ -46,8 +53,8 @@ export async function create(context: Context, options: any) {
  * Ensure directory is empty except for auto-generated configuration file.
  */
 async function isTargetDirectorySafe(
-    dest: string,
-    configPath: string): Promise<boolean> {
+  dest: string,
+  configPath: string): Promise<boolean> {
   const files = await readdir(dest);
   return (!(files.length > 1 ||
             (files.length === 1 && join(dest, files[0]) != configPath)));

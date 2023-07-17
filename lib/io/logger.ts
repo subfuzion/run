@@ -69,12 +69,15 @@ abstract class AbstractLogger implements Logger {
 }
 
 
+/**
+ *
+ */
 export class StdLogger extends AbstractLogger implements Logger {
   err: Writable = stderr;
 
   constructor(
-      logLevel: LogLevel = LogLevel.None,
-      err?: Writable) {
+    logLevel: LogLevel = LogLevel.None,
+    err?: Writable) {
     super();
     this.logLevel = logLevel;
     this.err = err || stderr;

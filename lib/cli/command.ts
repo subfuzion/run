@@ -2,7 +2,9 @@ import {Command as BaseCommand, Help, Option} from "commander";
 
 import {Context} from "./context.js";
 
-export type CommandFn = ((context: Context, ...args: any[]) => void | Promise<void>) | undefined;
+export
+type CommandFn
+    = ((context: Context, ...args: any[]) => void | Promise<void>) | undefined;
 
 /**
  * Light wrapper for Commander command that invokes commands with context.
@@ -15,7 +17,7 @@ export class Command extends BaseCommand {
     this.contextFn = contextFn;
 
     if (commandFn) {
-      this.action(async function (options: any, command: Command) {
+      this.action(async function(options: any, command: Command) {
         const context = contextFn();
         try {
           await commandFn(context, options, command);
@@ -60,10 +62,10 @@ class RunHelp extends Help {
 
     // Unless this.showHidden is set, hide the help option by default.
     if (!this.showHidden) {
-      let help = opts.find(opt => opt.short === "-h");
+      const help = opts.find((opt) => opt.short === "-h");
       if (help) {
         help.hidden = true;
-        opts = opts.filter(opt => opt.short != "-h");
+        opts = opts.filter((opt) => opt.short != "-h");
       }
     }
 
@@ -90,13 +92,13 @@ class RunHelp extends Help {
 
     // Unless this.showHidden is set, hide the help command by default.
     if (!this.showHidden) {
-      let help = cmds.find(cmd => cmd.name() === "help");
+      const help = cmds.find((cmd) => cmd.name() === "help");
       if (help) {
         cmd.setOptionValue("hidden", true);
         // TODO: this is a hack, try to find another way that works.
         // @ts-ignore
         cmd._hidden = true;
-        cmds = cmds.filter(cmd => cmd.name() != "help");
+        cmds = cmds.filter((cmd) => cmd.name() != "help");
       }
     }
 
@@ -109,10 +111,11 @@ class RunHelp extends Help {
     if (!cmd.parent) {
       const name = cmd.name();
       const version = cmd.contextFn().version;
-      let lines = help.split("\n");
-      let usage = lines[0];
-      let descr = lines[2];
-      help = [`${name} ${version}\n`, `${descr}\n`, usage, ...lines.slice(3)].join("\n");
+      const lines = help.split("\n");
+      const usage = lines[0];
+      const descr = lines[2];
+      help = [`${name} ${version}\n`, `${descr}\n`, usage,
+        ...lines.slice(3)].join("\n");
     }
 
     return help + "\n";

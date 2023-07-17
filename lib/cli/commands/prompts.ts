@@ -11,7 +11,8 @@ type Choices = (string | Separator | { name: string, short: string })[];
  * Prompt for name when creating a new app.
  * @param defaultName The default name to use (same as the directory name).
  */
-export async function appNamePrompt(defaultName: string): Promise<string | undefined> {
+export
+async function appNamePrompt(defaultName: string): Promise<string | undefined> {
   const {appName} = await inquirer.prompt({
     name: "appName",
     message: "Enter a name for the new app:",
@@ -25,23 +26,26 @@ export async function appNamePrompt(defaultName: string): Promise<string | undef
  * Prompt for project template when creating a new app.
  * @param generator The project template generator.
  */
-export async function projectTemplatePrompt(generator: Generator): Promise<Template | undefined> {
+export
+async function projectTemplatePrompt(generator: Generator):
+    Promise<Template | undefined> {
   const templates = await generator.getTemplates();
 
   const noneChoice = "None";
 
-  const t = templates.find(t => t.defaultTemplate);
+  const t = templates.find((t) => t.defaultTemplate);
   const defaultTemplate = {
     name: `${t!.name} (default)`,
     short: t!.description,
   };
 
-  const templateChoices = templates.filter(t => !t.defaultTemplate).map(t => {
-    return {
-      name: t.name,
-      short: t.description,
-    };
-  });
+  const templateChoices =
+      templates.filter((t) => !t.defaultTemplate).map((t) => {
+        return {
+          name: t.name,
+          short: t.description,
+        };
+      });
 
   const choices: Choices = [
     defaultTemplate,
@@ -59,7 +63,7 @@ export async function projectTemplatePrompt(generator: Generator): Promise<Templ
 
   if (template === noneChoice) return;
   template = template.replace(" (default)", "");
-  return templates.find(t => t.name === template);
+  return templates.find((t) => t.name === template);
 }
 
 
@@ -94,7 +98,7 @@ export async function featurePrompt() {
         name: "MongoDB Atlas support",
         short: "",
       },
-    ]
+    ],
   });
   return features;
 }
@@ -107,7 +111,8 @@ export type BillingPromptChoice = "continue" | "enter" | "remove";
  * Prompt to use current or enter a new billing ID.
  * @param billingId The current billing ID.
  */
-export async function billingPrompt(billingId: string): Promise<BillingPromptChoice> {
+export
+async function billingPrompt(billingId: string): Promise<BillingPromptChoice> {
   const {choice} = await inquirer.prompt({
     type: "list",
     name: "choice",
@@ -120,7 +125,7 @@ export async function billingPrompt(billingId: string): Promise<BillingPromptCho
     ],
     filter(val) {
       return val.split(" ")[0].toLowerCase();
-    }
+    },
   });
   return choice as BillingPromptChoice;
 }
@@ -140,7 +145,11 @@ export async function newBillingPrompt(): Promise<string> {
 
 export type ProjectPromptChoice = "continue" | "enter" | "choose" | "create";
 
-export async function projectPrompt(projectId: string): Promise<ProjectPromptChoice> {
+/**
+ *
+ */
+export
+async function projectPrompt(projectId: string): Promise<ProjectPromptChoice> {
   const alreadyConfigured = [
     `Continue using this project (${projectId})`,
   ];
@@ -169,13 +178,16 @@ export async function projectPrompt(projectId: string): Promise<ProjectPromptCho
     choices: choices,
     filter(val) {
       return val.split(" ")[0].toLowerCase();
-    }
+    },
   });
 
   return choice;
 }
 
 
+/**
+ *
+ */
 export async function enterProjectPrompt(): Promise<string> {
   const {projectId} = await inquirer.prompt({
     name: "projectId",
